@@ -37,12 +37,14 @@ public class MultiplicarMatrices {
         return dv;
     }
 
-    public int dv_to_page (int dv, int tp){
-        return dv / tp;
+    public String dv_to_page (int dv, int tp){
+        int pg = dv / tp;
+        return Integer.toString(pg);
     }
 
-    public int dv_to_offset(int dv, int tp){
-        return dv % tp;
+    public String dv_to_offset(int dv, int tp){
+        int module = dv % tp;
+        return Integer.toString(module);
     }
 
     public String matrizx_ijk_to_string (int i, int j, int k, int n_matriz){
@@ -76,22 +78,45 @@ public class MultiplicarMatrices {
         //Array de Strings tipo ["Mx-f-c","pg","offset"]
         ArrayList<String[]> matriz_pagina_offset = new ArrayList<>();
 
-        int dv_elm_ik = 0; //Mat1[i][k]
-        int dv_elm_kj = 0;//Mat2[k][j]
-        int dv_elm_ij = 0;//Mat3[i][j]
-        //# Pagina, offset (posicion)
-        String[] pgs_offset_ik = new String[2];
-        String[] pgs_offset_kj = new String[2];
-        String[] pgs_offset_ij = new String[2];
+        int dv_elm_ik; //Mat1[i][k]
+        String matriz1_format;
+
+        int dv_elm_kj;//Mat2[k][j]
+        String matriz2_format;
+        
+        int dv_elm_ij;//Mat3[i][j]
+        String matriz3_format;
+    
+
+       
 
         //Bucle
         for (int i = 0; i<nf1; i++){ //numero de filas mat1 - 1
             for (int j=0; j<nc2; j++){ //numero de columnas mat2 - 1
+                //Matriz ijk, # Pagina, offset (posicion)
+                String[] mat3 = new String[3];
+
                 for (int k=0; k<nc1; k++){ //numero de columnas mat1 y filas mat2 (- 1)
 
-                    //dvs de ik y kj
+                    String[] mat1 = new String[3];
+                    String[] mat2 = new String[3];
+                    
+                    //formato, pagina y offset Matriz 1
                     dv_elm_ik = elm_to_dv(i, k, nf1, nc1, nc2, (short)1);
+                    mat1[0] = matrizx_ijk_to_string(i, j, k, 1);
+                    mat1[1] = dv_to_page(dv_elm_ik, tp);
+                    mat1[2] = dv_to_offset(dv_elm_ik, tp);
+
+
+                    //formato, pagina y offset Matriz 2
                     dv_elm_kj = elm_to_dv(k, j, nf1, nc1, nc2, (short)2);
+                    mat2[0] = matrizx_ijk_to_string(i, j, k, 2);
+                    mat2[1] = dv_to_page(dv_elm_ik, tp);
+                    mat2[2] = dv_to_offset(dv_elm_ik, tp);
+                    
+                    
+
+
 
                 }
                 
