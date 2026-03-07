@@ -23,12 +23,17 @@ public class MultiplicarMatrices {
     public int elm_to_dv (int i, int j, int nf1, int nc1, int nc2, short matriz_n){
         int dv_elm = (i * nc1 + j)*4 ;
         int dv_matriz = 0;
+        int dv = 0;
 
         if (matriz_n == 2){
-            dv_matriz =  
+            dv_matriz = nf1 * nc1 * 4;
+        }else if(matriz_n == 3){
+            dv_matriz = 4*nc1*(nf1+nc2);
         }
+        
+        dv = dv_matriz + dv_elm;
 
-        return retorno;
+        return dv;
     }
 
     public void paginacion_matrices(int nf1, int nc1, int nc2, int tp, String file_name){
