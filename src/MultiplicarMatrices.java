@@ -45,7 +45,7 @@ public class MultiplicarMatrices {
         return dv % tp;
     }
 
-    public String ijk_to_matriz (int i, int j, int k, int n_matriz){
+    public String matrizx_ijk_to_string (int i, int j, int k, int n_matriz){
         String i2 = Integer.toString(i);
         String j2 = Integer.toString(j);
         String k2 = Integer.toString(k);
@@ -54,9 +54,13 @@ public class MultiplicarMatrices {
         String retorno = "[Mx-f-c]";
         if (n_matriz == 2){
             retorno.replace("x", "2");
+            retorno.replace("f", k2);
+            retorno.replace("c", j2);
 
         }else if (n_matriz == 3){
             retorno.replace("x", "3");
+            retorno.replace("f", i2);
+            retorno.replace("c", j2);
         }else{
             retorno.replace("x", "1");
             retorno.replace("f", i2);
@@ -67,21 +71,25 @@ public class MultiplicarMatrices {
         return retorno;
     }
 
-    public HashMap paginacion_matrices(int nf1, int nc1, int nc2, int tp, String file_name){
+    public ArrayList<String[]> paginacion_matrices(int nf1, int nc1, int nc2, int tp, String file_name){
         //Var Locs
-        HashMap<String, int[]> page_map = new HashMap();
+        //Array de Strings tipo ["Mx-f-c","pg","offset"]
+        ArrayList<String[]> matriz_pagina_offset = new ArrayList<>();
+
         int dv_elm_ik = 0; //Mat1[i][k]
         int dv_elm_kj = 0;//Mat2[k][j]
         int dv_elm_ij = 0;//Mat3[i][j]
         //# Pagina, offset (posicion)
-        int[] pgs_offset_ik = new int[2];
-        int[] pgs_offset_kj = new int[2];
-        int[] pgs_offset_ij = new int[2];
+        String[] pgs_offset_ik = new String[2];
+        String[] pgs_offset_kj = new String[2];
+        String[] pgs_offset_ij = new String[2];
 
         //Bucle
         for (int i = 0; i<nf1; i++){ //numero de filas mat1 - 1
             for (int j=0; j<nc2; j++){ //numero de columnas mat2 - 1
                 for (int k=0; k<nc1; k++){ //numero de columnas mat1 y filas mat2 (- 1)
+
+                    //dvs de ik y kj
                     dv_elm_ik = elm_to_dv(i, k, nf1, nc1, nc2, (short)1);
                     dv_elm_kj = elm_to_dv(k, j, nf1, nc1, nc2, (short)2);
 
@@ -90,7 +98,7 @@ public class MultiplicarMatrices {
             }
         }
 
-        return page_map;
+        return matriz_pagina_offset;
 
     }
 
