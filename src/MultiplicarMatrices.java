@@ -86,19 +86,30 @@ public class MultiplicarMatrices {
         int length = paginacion.size();
         String text_length = Integer.toString(length);
 
+
         //Calculo de paginas
         // 1 direccion -> 4 bytes
         // # pgs = #direcciones * 4 / TP
+        int total_bytes = 4 * length;
+        int np = (total_bytes + tp - 1) / tp;
+        String np_text = Integer.toString(np);
 
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file_name));
             writer.write("TP = "+tptext);
+            writer.newLine();
             writer.write("NF1 = "+nf1text);
+            writer.newLine();
             writer.write("NC1 = "+ nc1text);
+            writer.newLine();
             writer.write("NF2 = "+ nc1text);
+            writer.newLine();
             writer.write("NC2 = "+nc2text);
+            writer.newLine();
             writer.write("NR = "+text_length);
-            writer.write("NP = "+)
+            writer.newLine();
+            writer.write("NP = "+np_text);
+            writer.newLine();
             for (String linea : paginacion){
                 writer.write(linea);
                 writer.newLine();
@@ -109,7 +120,7 @@ public class MultiplicarMatrices {
         }
     }
 
-    public ArrayList<String> paginacion_matrices(int nf1, int nc1, int nc2, int tp, String file_name){
+    public void paginacion_matrices(int nf1, int nc1, int nc2, int tp, String file_name){
         //Var Locs
         //Array de Strings tipo ["Mx-f-c","pg","offset"]
         ArrayList<String> matriz_pagina_offset = new ArrayList<>();
@@ -153,16 +164,14 @@ public class MultiplicarMatrices {
             }
         }
 
-        return matriz_pagina_offset;
-
-
-        
+        writeFile(nf1, nc1, nc2, tp, file_name, matriz_pagina_offset);
 
     }
 
 
     public static void main(String[] args) {
-        System.out.println("a");
+        MultiplicarMatrices mm = new MultiplicarMatrices();
+        mm.paginacion_matrices(3, 2, 3, 10, "aura.txt");
     }
     
 }
