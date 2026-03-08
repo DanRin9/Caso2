@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class MultiplicarMatrices {
@@ -21,7 +24,7 @@ public class MultiplicarMatrices {
         }
     }
 
-    public int elm_to_dv (int i, int j, int nf1, int nc1, int nc2, short matriz_n){
+    public int elm_to_dv (int i, int j, int nf1, int nc1, int nc2, int matriz_n){
         int dv_elm = (i * nc1 + j)*4 ;
         int dv_matriz = 0;
         int dv = 0;
@@ -55,22 +58,55 @@ public class MultiplicarMatrices {
         //M1 o M2 o M3
         String retorno = "[Mx-f-c]";
         if (n_matriz == 2){
-            retorno.replace("x", "2");
-            retorno.replace("f", k2);
-            retorno.replace("c", j2);
+            retorno = retorno.replace("x", "2");
+            retorno = retorno.replace("f", k2);
+            retorno = retorno.replace("c", j2);
 
         }else if (n_matriz == 3){
-            retorno.replace("x", "3");
-            retorno.replace("f", i2);
-            retorno.replace("c", j2);
+            retorno = retorno.replace("x", "3");
+            retorno = retorno.replace("f", i2);
+            retorno = retorno.replace("c", j2);
         }else{
-            retorno.replace("x", "1");
-            retorno.replace("f", i2);
-            retorno.replace("c", k2);
+            retorno = retorno.replace("x", "1");
+            retorno = retorno.replace("f", i2);
+            retorno = retorno.replace("c", k2);
 
         }
 
         return retorno;
+    }
+
+    public void writeFile(int nf1, int nc1, int nc2, int tp, String file_name, ArrayList<String> paginacion){
+        String nf1text = Integer.toString(nf1);
+        String nc1text = Integer.toString(nc1);
+        String nc2text = Integer.toString(nc2);
+        String tptext = Integer.toString(tp);
+
+        //Calculo de cantidad de dvs
+        int length = paginacion.size();
+        String text_length = Integer.toString(length);
+
+        //Calculo de paginas
+        // 1 direccion -> 4 bytes
+        // # pgs = #direcciones * 4 / TP
+
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file_name));
+            writer.write("TP = "+tptext);
+            writer.write("NF1 = "+nf1text);
+            writer.write("NC1 = "+ nc1text);
+            writer.write("NF2 = "+ nc1text);
+            writer.write("NC2 = "+nc2text);
+            writer.write("NR = "+text_length);
+            writer.write("NP = "+)
+            for (String linea : paginacion){
+                writer.write(linea);
+                writer.newLine();
+            }
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<String> paginacion_matrices(int nf1, int nc1, int nc2, int tp, String file_name){
@@ -92,32 +128,35 @@ public class MultiplicarMatrices {
                 for (int k=0; k<nc1; k++){ //numero de columnas mat1 y filas mat2 (- 1)
 
                     //formato, pagina y offset Matriz 1
-                    dv_elm_ik = elm_to_dv(i, k, nf1, nc1, nc2, (short)1);
+                    dv_elm_ik = elm_to_dv(i, k, nf1, nc1, nc2, 1);
                     String matriz1 = matrizx_ijk_to_string(i, j, k, 1);
                     String pg = dv_to_page(dv_elm_ik, tp);
                     String offset = dv_to_offset(dv_elm_ik, tp);
-                    matriz_pagina_offset.add(String.join(matriz1, pg, offset));
+                    matriz_pagina_offset.add(String.join(", ", matriz1, pg, offset));
 
                     //formato, pagina y offset Matriz 2
-                    dv_elm_kj = elm_to_dv(k, j, nf1, nc1, nc2, (short)2);
+                    dv_elm_kj = elm_to_dv(k, j, nf1, nc1, nc2, 2);
                     String matriz2 = matrizx_ijk_to_string(i, j, k, 2);
                     String pg2 = dv_to_page(dv_elm_kj, tp);
                     String offset2 = dv_to_offset(dv_elm_kj, tp);
-                    matriz_pagina_offset.add(String.join(matriz2, pg2, offset2));
+                    matriz_pagina_offset.add(String.join(", ",matriz2, pg2, offset2));
 
                 }
 
                 //formato, pagina y offset Matriz 2
-                dv_elm_ij = elm_to_dv(i, j, nf1, nc1, nc2, (short)2);
+                dv_elm_ij = elm_to_dv(i, j, nf1, nc1, nc2, 3);
                 String matriz3 = matrizx_ijk_to_string(i, j, 0, 3);
                 String pg3 = dv_to_page(dv_elm_ij, tp);
                 String offset3 = dv_to_offset(dv_elm_ij, tp);
-                matriz_pagina_offset.add(String.join(matriz3, pg3, offset3));
+                matriz_pagina_offset.add(String.join(", ",matriz3, pg3, offset3));
                 
             }
         }
 
         return matriz_pagina_offset;
+
+
+        
 
     }
 
