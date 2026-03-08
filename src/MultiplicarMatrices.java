@@ -171,7 +171,7 @@ public class MultiplicarMatrices {
 
     public static void main(String[] args) {
         MultiplicarMatrices mm = new MultiplicarMatrices();
-        mm.paginacion_matrices(3, 2, 3, 10, "aura.txt");
+        mm.paginacion_matrices(4, 6, 3, 46, "aura.txt");
     }
     
 }
