@@ -41,9 +41,6 @@ public class MultiplicarMatrices {
         
         dv = dv_matriz + dv_elm;
 
-        System.out.println("DEBUG elm_to_dv: i=" + i + ", j=" + j + ", matriz_n=" + matriz_n
-                + ", dv_elm=" + dv_elm + ", dv_matriz=" + dv_matriz + ", dv=" + dv);
-
         return dv;
     }
 
@@ -96,7 +93,7 @@ public class MultiplicarMatrices {
 
         //Calculo de paginas
         // 1 direccion -> 4 bytes
-        // # pgs = #direcciones * 4 / TP
+        // # pgs = #direcciones / TP
         double np = Math.ceil(length / tp);
         String np_text = Double.toString(np);
 
@@ -149,8 +146,6 @@ public class MultiplicarMatrices {
                     String matriz1 = matrizx_ijk_to_string(i, j, k, 1);
                     String pg = dv_to_page(dv_elm_ik, tp);
                     String offset = dv_to_offset(dv_elm_ik, tp);
-                    System.out.println("DEBUG paginacion_matrices: i=" + i + ", j=" + j + ", k=" + k
-                            + ", dv=" + dv_elm_ik + ", pg=" + pg + ", offset=" + offset);
                     matriz_pagina_offset.add(String.join(", ", matriz1, pg, offset));
 
                     //formato, pagina y offset Matriz 2
@@ -158,8 +153,6 @@ public class MultiplicarMatrices {
                     String matriz2 = matrizx_ijk_to_string(i, j, k, 2);
                     String pg2 = dv_to_page(dv_elm_kj, tp);
                     String offset2 = dv_to_offset(dv_elm_kj, tp);
-                    System.out.println("DEBUG paginacion_matrices: i=" + i + ", j=" + j + ", k=" + k
-                            + ", dv=" + dv_elm_kj + ", pg=" + pg2 + ", offset=" + offset2);
                     matriz_pagina_offset.add(String.join(", ",matriz2, pg2, offset2));
 
                 }
@@ -169,8 +162,6 @@ public class MultiplicarMatrices {
                 String matriz3 = matrizx_ijk_to_string(i, j, 0, 3);
                 String pg3 = dv_to_page(dv_elm_ij, tp);
                 String offset3 = dv_to_offset(dv_elm_ij, tp);
-                System.out.println("DEBUG paginacion_matrices: i=" + i + ", j=" + j + ", k=0"
-                        + ", dv=" + dv_elm_ij + ", pg=" + pg3 + ", offset=" + offset3);
                 matriz_pagina_offset.add(String.join(", ",matriz3, pg3, offset3));
                 
             }
